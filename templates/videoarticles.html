@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if videoarticles %}
+<div class="d-flex justify-content-between">
+<div class="container">
+    <main role="main">
+      <div class="album py-3">
+          <div class="row">
+            {% if videoarticles %}
+            {%for videoarticle in videoarticles%}
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                {% if videoarticle.article_video %}
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe width="400" height="200" src="{{videoarticle.article_video}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                  <p class="card-text">{{videoarticle.videoarticletitle}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">      
+                    </div>
+                    <small class="text-muted">{{videoarticle.videoarticlecreated_date}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+      </div>
+    </main>
+  </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <div class="alert alert-dark">
+                Makale Bulunamadı
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock body %}

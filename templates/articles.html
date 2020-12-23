@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <h3>MAKALELER</h3>
+            <hr>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <form>
+                {% csrf_token %}
+                <input type="text" name="keyword" class="input-sm" maxlength="64" placeholder="Ara...">
+                <button type="submit" class="btn btn-primary btn-sm" style=>ARA</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% if articles %}
+{% for article in articles %}
+{% if article.article_file %}
+<div class="container text-center" style="margin-left: 15%; margin-bottom: 10%;">
+    <div class="row">
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+            <!-- Title -->
+            <a href="{% url 'article:detail' article.id %}">
+                <h1 class="mt-4" style="color: black;">{{article.title}}</h1>
+            </a>
+            <!-- Author -->
+            <p class="lead">
+                by , {{article.author.username}}
+            </p>
+            <hr>
+            <br>
+            <!-- Date/Time -->
+            <p>Tarih : {{article.created_date}}</p>
+            <br>
+            <hr>
+            <!-- Preview Image -->
+            {% if article.article_file %}
+            <img class="img-fluid rounded" src="{{article.article_file.url}}">
+
+            {% endif %}
+            <br>
+            <!-- Post Content -->
+            <p class="lead">
+                {{article.content | safe | truncatewords:25}}
+            </p>
+            <a href="{% url 'article:detail' article.id %}" style="color: gray;">>>>>>>>>>DEVAMINI OKU</a>
+        </div>
+    </div>
+</div>
+{% else %}
+{%endif%}
+{% endfor %}
+{% else %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            <div class="alert alert-dark">
+                Makale Bulunamadı
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock body %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h4>Kontrol Paneli</h4>
+<hr>
+<p>Hoşgeldiniz, <small>{{request.user.username}}</small></p>
+<hr>
+<a class="btn btn-secondary" href="{% url 'article:addarticle' %}">ADDARTİCLE</a>
+<a class="btn btn-secondary" href="{% url 'article:addvideoarticle' %}" style="float: right;">ADDVİDEOARTİCLE</a>
+<hr>
+{% if articles %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Başlık</th>
+            <th scope="col">Yazar</th>
+            <th scope="col">Tarih</th>
+            <th scope="col">Güncelle</th>
+            <th scope="col">Sil</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <th scope="row">{{article.id}}</th>
+            <td><a href="{% url 'article:detail' article.id %}" style="color: gray;">{{article.title}}</a></td>
+            <td>{{article.author.username}}</td>
+            <td>{{article.created_date}}</td>
+            <td><a href="{% url 'article:update' article.id %}" class="btn btn-secondary">Güncelle</a></td>
+            <td><a href="{% url 'article:delete' article.id %}" class="btn btn-dark">Sil</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="alert alert-secondary">
+            Henüz Makaleniz Bulunmuyor
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% endblock body %}
